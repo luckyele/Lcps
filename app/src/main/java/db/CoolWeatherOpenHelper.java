@@ -6,24 +6,24 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 
 
-public class CoolWeatherOpenHelper extends SQLiteOpenHelper {
+class CoolWeatherOpenHelper extends SQLiteOpenHelper {
 
-    public static final String CRTEATE_PROVICE = "create table Province ("
+    private static final String CREATE_PROVINCE = "create table Province ("
             + "id integer primary key autoincrement,"
             + "province_name text,"
             + "province_code text)";
 
-    public static final String CRTEATE_CITY = "create table City ("
+    private static final String CREATE_CITY = "create table City ("
             + "id integer primary key autoincrement,"
             + "city_name text,"
             + "city_code text,"
-            + "province_id integer)";
+            + "province_code text)";
 
-    public static final String CRTEATE_COUNTY = "create table County ("
+    private static final String CREATE_COUNTY = "create table County ("
             + "id integer primary key autoincrement,"
             + "county_name text,"
             + "county_code text,"
-            + "city_id integer)";
+            + "city_code text)";
 
     public CoolWeatherOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory,
                                  int version) {
@@ -31,9 +31,9 @@ public class CoolWeatherOpenHelper extends SQLiteOpenHelper {
     }
 
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CRTEATE_PROVICE);
-        db.execSQL(CRTEATE_CITY);
-        db.execSQL(CRTEATE_COUNTY);
+        db.execSQL(CREATE_PROVINCE);
+        db.execSQL(CREATE_CITY);
+        db.execSQL(CREATE_COUNTY);
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

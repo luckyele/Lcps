@@ -7,9 +7,8 @@ import model.City;
 import model.County;
 import model.Province;
 
-/**
- * Created by lucky on 11/18/17.
- */
+
+
 
 public class Utility {
     public synchronized static boolean handleProvinceResponse(CoolWeatherDB
@@ -32,16 +31,16 @@ public class Utility {
     }
     
     public synchronized static boolean handleCityResponse(CoolWeatherDB
-        coolWeatherDB, String response, int provinceId) {
+        coolWeatherDB, String response, String provinceCode) {
         if (!TextUtils.isEmpty(response)) {
-            String[] allCitys = response.split(",");
-            if (allCitys != null && allCitys.length > 0) {
-                for (String p : allCitys) {
+            String[] allCities = response.split(",");
+            if (allCities != null && allCities.length > 0) {
+                for (String p : allCities) {
                     String[] array = p.split("\\|");
                     City city = new City();
                     city.setCityCode(array[0]);
                     city.setCityName(array[1]);
-                    city.setProvinceId(provinceId);
+                    city.setProvinceCode(provinceCode);
 
                     coolWeatherDB.saveCity(city);
                 }
@@ -50,17 +49,18 @@ public class Utility {
         }
         return false;
     }
+
     public synchronized static boolean handleCountyResponse(CoolWeatherDB
-        coolWeatherDB, String response, int cityId) {
+        coolWeatherDB, String response, String cityCode) {
         if (!TextUtils.isEmpty(response)) {
-            String[] allCountys = response.split(",");
-            if (allCountys != null && allCountys.length > 0) {
-                for (String p : allCountys) {
+            String[] allCounties = response.split(",");
+            if (allCounties != null && allCounties.length > 0) {
+                for (String p : allCounties) {
                     String[] array = p.split("\\|");
                     County county = new County();
                     county.setCountyCode(array[0]);
                     county.setCountyName(array[1]);
-                    county.setCityId(cityId);
+                    county.setCityCode(cityCode);
 
                     coolWeatherDB.saveCounty(county);
                 }
@@ -69,8 +69,5 @@ public class Utility {
         }
         return false;
     }
-    
-    
-    
 }
 

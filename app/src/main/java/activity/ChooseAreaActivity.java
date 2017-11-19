@@ -3,7 +3,6 @@ package activity;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
@@ -16,8 +15,6 @@ import android.widget.Toast;
 
 import com.yun.lcps.R;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,38 +26,35 @@ import util.HttpCallbackListener;
 import util.HttpUtil;
 import util.Utility;
 
-/**
- * Created by lucky on 11/18/17.
- */
+
 
 public class ChooseAreaActivity extends Activity {
-    public static final int LEVEL_PROVINCE = 0;
-    public static final int LEVEL_CITY = 1;
-    public static final int LEVEL_COUNTY = 2;
+    private static final int LEVEL_PROVINCE = 0;
+    private static final int LEVEL_CITY = 1;
+    private static final int LEVEL_COUNTY = 2;
 
     private ProgressDialog progressDialog;
     private TextView titleText;
     private ListView listView;
     private ArrayAdapter<String> adapter;
     private CoolWeatherDB coolWeatherDB;
-    private List<String> dataList = new ArrayList<>();
+    private final List<String> dataList = new ArrayList<>();
 
     private List<Province> provinceList;
     private List<City> cityList;
-    private List<County> countyList;
 
     private Province selectedProvince;
     private City selectedCity;
-    private int currentLevel;
+    private int currentLevel = 0;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.choose_area);
         listView = (ListView) findViewById(R.id.list_view);
         titleText = (TextView) findViewById(R.id.title_text);
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,
                 dataList);
         listView.setAdapter(adapter);
         coolWeatherDB = CoolWeatherDB.getInstance(this);
@@ -69,9 +63,13 @@ public class ChooseAreaActivity extends Activity {
                                     long arg3) {
                 if (currentLevel == LEVEL_PROVINCE) {
                     selectedProvince = provinceList.get(index);
+                    Toast.makeText(ChooseAreaActivity.this, selectedProvince.getProvinceCode(),
+                            Toast.LENGTH_SHORT).show();
                     queryCities();
                 } else if (currentLevel == LEVEL_CITY) {
                     selectedCity = cityList.get(index);
+                    Toast.makeText(ChooseAreaActivity.this, selectedCity.getCityCode(),
+                            Toast.LENGTH_SHORT).show();
                     queryCounties();
                 }
             }
@@ -95,7 +93,7 @@ public class ChooseAreaActivity extends Activity {
         }
     }
     private void queryCities() {
-        cityList = coolWeatherDB.loadCities(selectedProvince.getId());
+        cityList = coolWeatherDB.loadCities(selectedProvince.getProvinceCode());
         if (cityList.size() > 0) {
             dataList.clear();
             for (City city : cityList) {
@@ -110,7 +108,7 @@ public class ChooseAreaActivity extends Activity {
         }
     }
     private void queryCounties() {
-        countyList = coolWeatherDB.loadCounties(selectedCity.getId());
+        List<County> countyList = coolWeatherDB.loadCounties(selectedCity.getCityCode());
         if (countyList.size() > 0) {
             dataList.clear();
             for (County county : countyList) {
@@ -144,10 +142,10 @@ public class ChooseAreaActivity extends Activity {
                             response);
                 } else if ("city".equals(type)) {
                     result = Utility.handleCityResponse(coolWeatherDB,
-                            response, selectedProvince.getId());
+                            response, selectedProvince.getProvinceCode());
                 } else if ("county".equals(type)) {
                     result = Utility.handleCountyResponse(coolWeatherDB,
-                            response, selectedCity.getId());
+                            response, selectedCity.getCityCode());
                 }
                 if (result) {
                     runOnUiThread(new Runnable() {

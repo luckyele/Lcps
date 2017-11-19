@@ -3,9 +3,9 @@ package model;
 
 public class County {
     private int id;
+    private String cityCode;
     private String countyName;
     private String countyCode;
-    private int cityId;
 
     public int getId() {
         return id;
@@ -31,11 +31,11 @@ public class County {
         this.countyCode = countyCode;
     }
 
-    public int getCityId() {
-        return cityId;
+    public String getCityCode() {
+        return cityCode;
     }
 
-    public void setCityId(int cityId) {
-        this.cityId = cityId;
+    public void setCityCode(String cityCode) {
+        this.cityCode = cityCode;
     }
 }
