@@ -70,7 +70,7 @@ public class CoolWeatherDB {
         }
     }
     
-    public List<City> loadCities(String provinceCode) {
+    public List<City> loadCities(int provinceCode) {
         List<City> list = new ArrayList<>();
         Cursor cursor = db.query("City", null, "province_code = ?",
                 new String[]{String.valueOf(provinceCode)},null,null,null);
@@ -97,7 +97,7 @@ public class CoolWeatherDB {
         }
     }
 
-    public List<County> loadCounties(String cityCode) {
+    public List<County> loadCounties(int cityCode) {
         List<County> list = new ArrayList<>();
         Cursor cursor = db.query("County", null, "city_code = ?",
                 new String[]{String.valueOf(cityCode)},null,null,null);

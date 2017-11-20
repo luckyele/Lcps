@@ -3,7 +3,7 @@ package model;
 
 public class County {
     private int id;
-    private String cityCode;
+    private int cityCode;
     private String countyName;
     private String countyCode;
 
@@ -31,11 +31,11 @@ public class County {
         this.countyCode = countyCode;
     }
 
-    public String getCityCode() {
+    public int getCityCode() {
         return cityCode;
     }
 
-    public void setCityCode(String cityCode) {
+    public void setCityCode(int cityCode) {
         this.cityCode = cityCode;
     }
 }

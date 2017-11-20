@@ -93,7 +93,7 @@ public class ChooseAreaActivity extends Activity {
         }
     }
     private void queryCities() {
-        cityList = coolWeatherDB.loadCities(selectedProvince.getProvinceCode());
+        cityList = coolWeatherDB.loadCities(selectedProvince.getId());
         if (cityList.size() > 0) {
             dataList.clear();
             for (City city : cityList) {
@@ -108,7 +108,7 @@ public class ChooseAreaActivity extends Activity {
         }
     }
     private void queryCounties() {
-        List<County> countyList = coolWeatherDB.loadCounties(selectedCity.getCityCode());
+        List<County> countyList = coolWeatherDB.loadCounties(selectedCity.getId());
         if (countyList.size() > 0) {
             dataList.clear();
             for (County county : countyList) {
@@ -142,10 +142,10 @@ public class ChooseAreaActivity extends Activity {
                             response);
                 } else if ("city".equals(type)) {
                     result = Utility.handleCityResponse(coolWeatherDB,
-                            response, selectedProvince.getProvinceCode());
+                            response, selectedProvince.getId());
                 } else if ("county".equals(type)) {
                     result = Utility.handleCountyResponse(coolWeatherDB,
-                            response, selectedCity.getCityCode());
+                            response, selectedCity.getId());
                 }
                 if (result) {
                     runOnUiThread(new Runnable() {
