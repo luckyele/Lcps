@@ -2,7 +2,10 @@ package activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
@@ -15,8 +18,10 @@ import android.widget.Toast;
 
 import com.yun.lcps.R;
 
+import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.prefs.PreferenceChangeEvent;
 
 import db.CoolWeatherDB;
 import model.City;
@@ -42,6 +47,7 @@ public class ChooseAreaActivity extends Activity {
 
     private List<Province> provinceList;
     private List<City> cityList;
+    private List<County> countyList;
 
     private Province selectedProvince;
     private City selectedCity;
@@ -50,8 +56,18 @@ public class ChooseAreaActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        if (prefs.getBoolean("city_selected", false)) {
+            Intent intent = new Intent(this, WeatherActivity.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
+
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.choose_area);
+
         listView = (ListView) findViewById(R.id.list_view);
         titleText = (TextView) findViewById(R.id.title_text);
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,
@@ -71,9 +87,17 @@ public class ChooseAreaActivity extends Activity {
                     Toast.makeText(ChooseAreaActivity.this, selectedCity.getCityCode(),
                             Toast.LENGTH_SHORT).show();
                     queryCounties();
+                } else if (currentLevel == LEVEL_COUNTY) {
+                    String countyCode = countyList.get(index).getCountyCode();
+                    Intent intent = new Intent(ChooseAreaActivity.this,
+                            WeatherActivity.class);
+                    intent.putExtra("county_code", countyCode);
+                    startActivity(intent);
+                    finish();
                 }
             }
         });
+
         queryProvinces();
     }
 
@@ -92,6 +116,7 @@ public class ChooseAreaActivity extends Activity {
             queryFromServer(null, "province");
         }
     }
+
     private void queryCities() {
         cityList = coolWeatherDB.loadCities(selectedProvince.getId());
         if (cityList.size() > 0) {
