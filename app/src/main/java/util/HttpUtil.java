@@ -1,5 +1,7 @@
 package util;
 
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -24,6 +26,7 @@ public class HttpUtil {
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in));
                     StringBuilder response = new StringBuilder();
                     String line;
+                    Log.d("response", response.toString());
                     while ((line = reader.readLine()) != null) {
                         response.append(line);
                     }

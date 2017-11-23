@@ -6,20 +6,18 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.yun.lcps.R;
 
 import util.HttpCallbackListener;
 import util.HttpUtil;
 import util.Utility;
-
-import static android.R.attr.type;
 
 
 public class WeatherActivity extends Activity implements View.OnClickListener {
@@ -106,9 +104,12 @@ public class WeatherActivity extends Activity implements View.OnClickListener {
                         String[] array = response.split("\\|");
                         if (array.length == 2) {
                             String weatherCode = array[1];
+                            Log.v("weatherCode", weatherCode);
                             queryWeatherInfo(weatherCode);
                         }
-                    } else if ("weatherCode".equals(type)) {
+                    }
+                }
+                 if ("weatherCode".equals(type)) {
                         Utility.handleWeatherResponse(WeatherActivity.this, response);
                         runOnUiThread(new Runnable() {
                             @Override
@@ -116,8 +117,7 @@ public class WeatherActivity extends Activity implements View.OnClickListener {
                                 showWeather();
                             }
                         });
-                    }
-                }
+                 }
             }
 
             public void onError(Exception e) {
@@ -131,13 +131,13 @@ public class WeatherActivity extends Activity implements View.OnClickListener {
         });
     }
 
-    public void showWeather() {
+    private void showWeather() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         cityNameText.setText(prefs.getString("city_name", ""));
         temp1Text.setText(prefs.getString("temp1", ""));
         temp2Text.setText(prefs.getString("temp2", ""));
         weatherDespText.setText(prefs.getString("weather_desp",""));
-        publishText.setText("Today" + prefs.getString("publish_time","")+"published");
+        publishText.setText("今天" + prefs.getString("publish_time","")+"发布");
         currentDateText.setText(prefs.getString("current_date", ""));
         weatherInfoLayout.setVisibility(View.VISIBLE);
         cityNameText.setVisibility(View.VISIBLE);

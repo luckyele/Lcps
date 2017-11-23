@@ -57,6 +57,7 @@ public class CoolWeatherDB {
                 list.add(province);
             } while (cursor.moveToNext());
         }
+        cursor.close();
         return list;
     }
 
@@ -84,6 +85,7 @@ public class CoolWeatherDB {
                 list.add(city);
             } while (cursor.moveToNext());
         }
+        cursor.close();
         return list;
     }
 
@@ -111,6 +113,7 @@ public class CoolWeatherDB {
                 list.add(county);
             } while (cursor.moveToNext());
         }
+        cursor.close();
         return list;
     }
 }

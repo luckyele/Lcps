@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -19,7 +20,8 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:textColor="#fff"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            tools:ignore="RelativeOverlap" />
         <Button
             android:id="@+id/refresh_weather"
             android:layout_width="30dp"
@@ -42,7 +44,8 @@
             android:layout_marginEnd="10dp"
             android:layout_marginTop="10dp"
             android:textColor="#fff"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            tools:ignore="RelativeOverlap" />
         <LinearLayout
             android:id="@+id/weather_info_layout"
             android:layout_width="wrap_content"
@@ -82,7 +85,8 @@
                     android:layout_marginRight="10dp"
                     android:text="~"
                     android:textColor="#fff"
-                    android:textSize="40sp" />
+                    android:textSize="40sp"
+                    tools:ignore="HardcodedText" />
                 <TextView
                     android:id="@+id/temp2"
                     android:layout_width="wrap_content"

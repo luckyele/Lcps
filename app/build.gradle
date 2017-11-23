@@ -6,6 +6,7 @@ android {
     defaultConfig {
         applicationId "com.yun.lcps"
         minSdkVersion 19
+        //noinspection OldTargetApi
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
