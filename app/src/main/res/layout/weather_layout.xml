@@ -7,9 +7,10 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#484e61">
+        android:background="#27a5f9">
         <Button
             android:id="@+id/switch_city"
+            android:background="@mipmap/back"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_centerVertical="true"
@@ -24,6 +25,7 @@
             tools:ignore="RelativeOverlap" />
         <Button
             android:id="@+id/refresh_weather"
+            android:background="@mipmap/fresh"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentEnd="true"
@@ -83,7 +85,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:text="~"
+                    android:text=""
                     android:textColor="#fff"
                     android:textSize="40sp"
                     tools:ignore="HardcodedText" />
